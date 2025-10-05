@@ -82,7 +82,7 @@ export default async function HomePage() {
           </div>
           <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-primary/20 shadow-xl flex-shrink-0">
             <Image
-              src="/Hero-img.jpg"
+              src="/hero-image.jpg"
               alt="Jasper van den Heuvel - Portfolio Photo"
               fill
               className="object-cover"
