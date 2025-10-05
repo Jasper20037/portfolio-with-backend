@@ -36,7 +36,9 @@ export default async function HomePage() {
       {/* Header */}
       <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-foreground">Your Name</h1>
+          <h1 className="text-2xl font-bold text-foreground">
+            Jasper van den Heuvel
+          </h1>
           <nav className="flex items-center gap-4">
             <Link href="#projects">
               <Button variant="ghost" size="sm">
