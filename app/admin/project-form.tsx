@@ -22,6 +22,7 @@ interface Project {
   project_url: string | null
   github_url: string | null
   featured: boolean
+  is_hosted: boolean
   display_order: number
 }
 
@@ -39,6 +40,7 @@ export function ProjectForm({ project }: { project?: Project }) {
     project_url: project?.project_url || "",
     github_url: project?.github_url || "",
     featured: project?.featured || false,
+    is_hosted: project?.is_hosted ?? true,
     display_order: project?.display_order || 0,
   })
 
@@ -61,6 +63,7 @@ export function ProjectForm({ project }: { project?: Project }) {
       project_url: formData.project_url || null,
       github_url: formData.github_url || null,
       featured: formData.featured,
+      is_hosted: formData.is_hosted,
       display_order: formData.display_order,
     }
 
@@ -157,6 +160,7 @@ export function ProjectForm({ project }: { project?: Project }) {
               value={formData.project_url}
               onChange={(e) => setFormData({ ...formData, project_url: e.target.value })}
               placeholder="https://example.com"
+              disabled={!formData.is_hosted}
             />
           </div>
 
@@ -186,6 +190,23 @@ export function ProjectForm({ project }: { project?: Project }) {
               placeholder="0"
             />
             <p className="text-sm text-muted-foreground">Lower numbers appear first</p>
+          </div>
+
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="is_hosted"
+              checked={formData.is_hosted}
+              onCheckedChange={(checked) => {
+                setFormData({
+                  ...formData,
+                  is_hosted: checked as boolean,
+                  project_url: checked ? formData.project_url : "",
+                })
+              }}
+            />
+            <Label htmlFor="is_hosted" className="cursor-pointer">
+              Project has a live demo
+            </Label>
           </div>
 
           <div className="flex items-center space-x-2">
