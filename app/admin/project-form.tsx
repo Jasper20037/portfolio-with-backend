@@ -11,6 +11,13 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
+import { X } from "lucide-react"
+
+interface CodeSnippet {
+  title: string
+  language: string
+  code: string
+}
 
 interface Project {
   id?: string
@@ -24,6 +31,8 @@ interface Project {
   featured: boolean
   is_hosted: boolean
   display_order: number
+  code_snippets?: CodeSnippet[]
+  additional_images?: string[]
 }
 
 export function ProjectForm({ project }: { project?: Project }) {
@@ -43,6 +52,10 @@ export function ProjectForm({ project }: { project?: Project }) {
     is_hosted: project?.is_hosted ?? true,
     display_order: project?.display_order || 0,
   })
+
+  const [codeSnippets, setCodeSnippets] = useState<CodeSnippet[]>(project?.code_snippets || [])
+  const [additionalImages, setAdditionalImages] = useState<string[]>(project?.additional_images || [])
+  const [newImageUrl, setNewImageUrl] = useState("")
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -65,6 +78,8 @@ export function ProjectForm({ project }: { project?: Project }) {
       featured: formData.featured,
       is_hosted: formData.is_hosted,
       display_order: formData.display_order,
+      code_snippets: codeSnippets,
+      additional_images: additionalImages,
     }
 
     try {
@@ -87,6 +102,31 @@ export function ProjectForm({ project }: { project?: Project }) {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const addCodeSnippet = () => {
+    setCodeSnippets([...codeSnippets, { title: "", language: "javascript", code: "" }])
+  }
+
+  const updateCodeSnippet = (index: number, field: keyof CodeSnippet, value: string) => {
+    const updated = [...codeSnippets]
+    updated[index] = { ...updated[index], [field]: value }
+    setCodeSnippets(updated)
+  }
+
+  const removeCodeSnippet = (index: number) => {
+    setCodeSnippets(codeSnippets.filter((_, i) => i !== index))
+  }
+
+  const addImage = () => {
+    if (newImageUrl.trim()) {
+      setAdditionalImages([...additionalImages, newImageUrl.trim()])
+      setNewImageUrl("")
+    }
+  }
+
+  const removeImage = (index: number) => {
+    setAdditionalImages(additionalImages.filter((_, i) => i !== index))
   }
 
   return (
@@ -150,6 +190,76 @@ export function ProjectForm({ project }: { project?: Project }) {
               onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
               placeholder="/placeholder.svg?height=400&width=600"
             />
+          </div>
+
+          <div className="space-y-2">
+            <Label>Additional Images</Label>
+            <div className="flex gap-2">
+              <Input
+                value={newImageUrl}
+                onChange={(e) => setNewImageUrl(e.target.value)}
+                placeholder="Image URL"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault()
+                    addImage()
+                  }
+                }}
+              />
+              <Button type="button" onClick={addImage} variant="outline">
+                Add
+              </Button>
+            </div>
+            {additionalImages.length > 0 && (
+              <div className="space-y-2 mt-2">
+                {additionalImages.map((url, index) => (
+                  <div key={index} className="flex items-center gap-2 p-2 bg-muted rounded">
+                    <span className="flex-1 text-sm truncate">{url}</span>
+                    <Button type="button" size="sm" variant="ghost" onClick={() => removeImage(index)}>
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <Label>Code Snippets</Label>
+              <Button type="button" onClick={addCodeSnippet} variant="outline" size="sm">
+                Add Code Snippet
+              </Button>
+            </div>
+            {codeSnippets.map((snippet, index) => (
+              <Card key={index}>
+                <CardContent className="pt-4 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <Label>Snippet {index + 1}</Label>
+                    <Button type="button" size="sm" variant="ghost" onClick={() => removeCodeSnippet(index)}>
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  <Input
+                    placeholder="Snippet title"
+                    value={snippet.title}
+                    onChange={(e) => updateCodeSnippet(index, "title", e.target.value)}
+                  />
+                  <Input
+                    placeholder="Language (e.g., javascript, python, typescript)"
+                    value={snippet.language}
+                    onChange={(e) => updateCodeSnippet(index, "language", e.target.value)}
+                  />
+                  <Textarea
+                    placeholder="Paste your code here"
+                    value={snippet.code}
+                    onChange={(e) => updateCodeSnippet(index, "code", e.target.value)}
+                    rows={6}
+                    className="font-mono text-sm"
+                  />
+                </CardContent>
+              </Card>
+            ))}
           </div>
 
           <div className="space-y-2">
