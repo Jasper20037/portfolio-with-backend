@@ -56,21 +56,32 @@ export default async function HomePage() {
 
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20 md:py-32">
-        <div className="max-w-3xl">
-          <h2 className="text-5xl md:text-6xl font-bold text-foreground mb-6 text-balance">
-            Hi, I'm a Developer Building Amazing Things
-          </h2>
-          <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-            I'm passionate about creating innovative solutions and bringing ideas to life through code. Currently
-            seeking internship opportunities to grow and contribute to impactful projects.
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <Button size="lg" asChild>
-              <Link href="#projects">View My Work</Link>
-            </Button>
-            <Button size="lg" variant="outline" asChild>
-              <Link href="#contact">Get In Touch</Link>
-            </Button>
+        <div className="flex flex-col md:flex-row items-center gap-12 max-w-6xl">
+          <div className="flex-1">
+            <h2 className="text-5xl md:text-6xl font-bold text-foreground mb-6 text-balance">
+              Hi, I'm a Developer Building Amazing Things
+            </h2>
+            <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
+              I'm passionate about creating innovative solutions and bringing ideas to life through code. Currently
+              seeking internship opportunities to grow and contribute to impactful projects.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Button size="lg" asChild>
+                <Link href="#projects">View My Work</Link>
+              </Button>
+              <Button size="lg" variant="outline" asChild>
+                <Link href="#contact">Get In Touch</Link>
+              </Button>
+            </div>
+          </div>
+          <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-primary/20 shadow-xl flex-shrink-0">
+            <Image
+              src="/professional-headshot.png"
+              alt="Your Name - Portfolio Photo"
+              fill
+              className="object-cover"
+              priority
+            />
           </div>
         </div>
       </section>
