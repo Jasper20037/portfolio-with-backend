@@ -63,7 +63,7 @@ export function ProjectList({ projects }: { projects: Project[] }) {
                   {project.featured && (
                     <Badge variant="default" className="gap-1">
                       <Star className="h-3 w-3" />
-                      Featured
+                      Voorgesteld
                     </Badge>
                   )}
                 </div>

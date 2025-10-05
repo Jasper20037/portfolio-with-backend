@@ -1,32 +1,35 @@
-import { createClient } from "@/lib/supabase/server"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Github, ExternalLink, Mail, Linkedin } from "lucide-react"
-import Link from "next/link"
-import Image from "next/image"
+import { createClient } from "@/lib/supabase/server";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Github, ExternalLink, Mail, Linkedin } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
 
 interface Project {
-  id: string
-  title: string
-  description: string
-  long_description: string | null
-  technologies: string[]
-  image_url: string | null
-  project_url: string | null
-  github_url: string | null
-  featured: boolean
-  is_hosted: boolean
-  display_order: number
+  id: string;
+  title: string;
+  description: string;
+  long_description: string | null;
+  technologies: string[];
+  image_url: string | null;
+  project_url: string | null;
+  github_url: string | null;
+  featured: boolean;
+  is_hosted: boolean;
+  display_order: number;
 }
 
 export default async function HomePage() {
-  const supabase = await createClient()
+  const supabase = await createClient();
 
-  const { data: projects } = await supabase.from("projects").select("*").order("display_order", { ascending: true })
+  const { data: projects } = await supabase
+    .from("projects")
+    .select("*")
+    .order("display_order", { ascending: true });
 
-  const featuredProjects = projects?.filter((p) => p.featured) || []
-  const otherProjects = projects?.filter((p) => !p.featured) || []
+  const featuredProjects = projects?.filter((p) => p.featured) || [];
+  const otherProjects = projects?.filter((p) => !p.featured) || [];
 
   return (
     <div className="min-h-screen bg-background">
@@ -37,7 +40,7 @@ export default async function HomePage() {
           <nav className="flex items-center gap-4">
             <Link href="#projects">
               <Button variant="ghost" size="sm">
-                Projects
+                Projecten
               </Button>
             </Link>
             <Link href="#contact">
@@ -59,25 +62,28 @@ export default async function HomePage() {
         <div className="flex flex-col md:flex-row items-center gap-12 max-w-6xl">
           <div className="flex-1">
             <h2 className="text-5xl md:text-6xl font-bold text-foreground mb-6 text-balance">
-              Hi, I'm a Developer Building Amazing Things
+              Hi, Mijn naam is Jasper van den Heuvel
             </h2>
             <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-              I'm passionate about creating innovative solutions and bringing ideas to life through code. Currently
-              seeking internship opportunities to grow and contribute to impactful projects.
+              ik ben een HBO-ICT student met een passie voor full-stack
+              development. Ik bouw complete webapplicaties waarin de front-end
+              en back-end naadloos samenwerken. Mijn kracht ligt in het
+              ontwikkelen van schaalbare systemen, overzichtelijke interfaces en
+              het vertalen van gebruikersbehoeften naar technische oplossingen.
             </p>
             <div className="flex flex-wrap gap-4">
               <Button size="lg" asChild>
-                <Link href="#projects">View My Work</Link>
+                <Link href="#projects">Bekijk mijn werk</Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <Link href="#contact">Get In Touch</Link>
+                <Link href="#contact">Neem Contact Op</Link>
               </Button>
             </div>
           </div>
           <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-primary/20 shadow-xl flex-shrink-0">
             <Image
-              src="/professional-headshot.png"
-              alt="Your Name - Portfolio Photo"
+              src="/Hero-img.jpg"
+              alt="Jasper van den Heuvel - Portfolio Photo"
               fill
               className="object-cover"
               priority
@@ -89,7 +95,9 @@ export default async function HomePage() {
       {/* Featured Projects */}
       {featuredProjects.length > 0 && (
         <section id="projects" className="container mx-auto px-4 py-16">
-          <h3 className="text-3xl font-bold text-foreground mb-8">Featured Projects</h3>
+          <h3 className="text-3xl font-bold text-foreground mb-8">
+            Voorgestelde Projecten
+          </h3>
           <div className="grid gap-8 md:grid-cols-2">
             {featuredProjects.map((project) => (
               <ProjectCard key={project.id} project={project} featured />
@@ -101,7 +109,9 @@ export default async function HomePage() {
       {/* Other Projects */}
       {otherProjects.length > 0 && (
         <section className="container mx-auto px-4 py-16">
-          <h3 className="text-3xl font-bold text-foreground mb-8">More Projects</h3>
+          <h3 className="text-3xl font-bold text-foreground mb-8">
+            Meer Projecten
+          </h3>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {otherProjects.map((project) => (
               <ProjectCard key={project.id} project={project} />
@@ -114,26 +124,36 @@ export default async function HomePage() {
       <section id="contact" className="container mx-auto px-4 py-16">
         <Card className="max-w-2xl mx-auto">
           <CardContent className="pt-6">
-            <h3 className="text-3xl font-bold text-foreground mb-4">Let's Connect</h3>
+            <h3 className="text-3xl font-bold text-foreground mb-4">
+              Laten we Connecten
+            </h3>
             <p className="text-muted-foreground mb-6 leading-relaxed">
-              I'm actively looking for internship opportunities where I can contribute and learn. Feel free to reach
-              out!
+              Ik ben momenteel op zoek naar een stageplek waar ik kan bijdragen
+              en tegelijkertijd veel kan leren. Neem gerust contact met me op!
             </p>
             <div className="flex flex-wrap gap-4">
               <Button asChild>
-                <a href="mailto:your.email@example.com">
+                <a href="mailto:jasperheuvel13@gmail.com">
                   <Mail className="mr-2 h-4 w-4" />
                   Email Me
                 </a>
               </Button>
               <Button variant="outline" asChild>
-                <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">
+                <a
+                  href="https://github.com/Jasper20037"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Github className="mr-2 h-4 w-4" />
                   GitHub
                 </a>
               </Button>
               <Button variant="outline" asChild>
-                <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer">
+                <a
+                  href="https://www.linkedin.com/in/jasper-van-den-heuvel-00424a193/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Linkedin className="mr-2 h-4 w-4" />
                   LinkedIn
                 </a>
@@ -146,30 +166,39 @@ export default async function HomePage() {
       {/* Footer */}
       <footer className="border-t border-border mt-16">
         <div className="container mx-auto px-4 py-8 text-center text-muted-foreground">
-          <p>© 2025 Your Name. Built with Next.js and Supabase.</p>
+          <p>© 2025 Jasper van den Heuvel. Gebouwd met Next.js and Supabase.</p>
         </div>
       </footer>
     </div>
-  )
+  );
 }
 
 function ProjectCard({
   project,
   featured = false,
 }: {
-  project: Project
-  featured?: boolean
+  project: Project;
+  featured?: boolean;
 }) {
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-shadow">
       {project.image_url && (
         <div className="relative w-full h-48 bg-muted">
-          <Image src={project.image_url || "/placeholder.svg"} alt={project.title} fill className="object-cover" />
+          <Image
+            src={project.image_url || "/placeholder.svg"}
+            alt={project.title}
+            fill
+            className="object-cover"
+          />
         </div>
       )}
       <CardContent className="p-6">
-        <h4 className="text-xl font-bold text-foreground mb-2">{project.title}</h4>
-        <p className="text-muted-foreground mb-4 leading-relaxed">{project.description}</p>
+        <h4 className="text-xl font-bold text-foreground mb-2">
+          {project.title}
+        </h4>
+        <p className="text-muted-foreground mb-4 leading-relaxed">
+          {project.description}
+        </p>
         <div className="flex flex-wrap gap-2 mb-4">
           {project.technologies.map((tech) => (
             <Badge key={tech} variant="secondary">
@@ -180,7 +209,11 @@ function ProjectCard({
         <div className="flex gap-2">
           {project.is_hosted && project.project_url && (
             <Button size="sm" variant="outline" asChild>
-              <a href={project.project_url} target="_blank" rel="noopener noreferrer">
+              <a
+                href={project.project_url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <ExternalLink className="mr-2 h-4 w-4" />
                 Live Demo
               </a>
@@ -188,7 +221,11 @@ function ProjectCard({
           )}
           {project.github_url && (
             <Button size="sm" variant="outline" asChild>
-              <a href={project.github_url} target="_blank" rel="noopener noreferrer">
+              <a
+                href={project.github_url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Github className="mr-2 h-4 w-4" />
                 Code
               </a>
@@ -197,5 +234,5 @@ function ProjectCard({
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
