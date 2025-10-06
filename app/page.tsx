@@ -31,7 +31,7 @@ export default async function HomePage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50 animate-fade-in">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-4 flex items-center justify-between">
           <h1 className="text-2xl font-bold text-foreground hidden md:block">Jasper van den Heuvel</h1>
           <nav className="flex items-center gap-2 sm:gap-4 ml-auto md:ml-0">
@@ -57,7 +57,7 @@ export default async function HomePage() {
       {/* Hero Section */}
       <section className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-12 sm:py-20 md:py-32">
         <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
-          <div className="flex-1">
+          <div className="flex-1 animate-fade-in-up">
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-4 sm:mb-6 text-balance">
               Hi, Mijn naam is Jasper van den Heuvel
             </h2>
@@ -75,7 +75,7 @@ export default async function HomePage() {
               </Button>
             </div>
           </div>
-          <div className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-primary/20 shadow-xl flex-shrink-0">
+          <div className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-primary/20 shadow-xl flex-shrink-0 animate-slide-in-right animation-delay-200">
             <Image
               src="/hero-image.jpg"
               alt="Jasper van den Heuvel - Portfolio Photo"
@@ -89,7 +89,10 @@ export default async function HomePage() {
 
       {/* Featured Projects */}
       {featuredProjects.length > 0 && (
-        <section id="projects" className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-12 sm:py-16">
+        <section
+          id="projects"
+          className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-12 sm:py-16 animate-fade-in"
+        >
           <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-6 sm:mb-8">Voorgestelde Projecten</h3>
           <div className="grid gap-6 sm:gap-8 md:grid-cols-2">
             {featuredProjects.map((project) => (
@@ -101,7 +104,7 @@ export default async function HomePage() {
 
       {/* Other Projects */}
       {otherProjects.length > 0 && (
-        <section className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-12 sm:py-16">
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-12 sm:py-16 animate-fade-in">
           <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-6 sm:mb-8">Meer Projecten</h3>
           <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
             {otherProjects.map((project) => (
@@ -112,7 +115,10 @@ export default async function HomePage() {
       )}
 
       {/* Contact Section */}
-      <section id="contact" className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-12 sm:py-16">
+      <section
+        id="contact"
+        className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-12 sm:py-16 animate-scale-in"
+      >
         <Card className="max-w-2xl mx-auto">
           <CardContent className="pt-6">
             <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">Laten we Connecten</h3>
@@ -166,10 +172,15 @@ function ProjectCard({
   featured?: boolean
 }) {
   return (
-    <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+    <Card className="overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-[1.02] hover:-translate-y-1">
       {project.image_url && (
-        <div className="relative w-full h-48 bg-muted">
-          <Image src={project.image_url || "/placeholder.svg"} alt={project.title} fill className="object-cover" />
+        <div className="relative w-full h-48 bg-muted overflow-hidden">
+          <Image
+            src={project.image_url || "/placeholder.svg"}
+            alt={project.title}
+            fill
+            className="object-cover transition-transform duration-500 hover:scale-110"
+          />
         </div>
       )}
       <CardContent className="p-6">

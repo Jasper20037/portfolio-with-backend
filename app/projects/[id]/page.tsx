@@ -41,7 +41,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50 animate-fade-in">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-4 flex items-center justify-between">
           <Link href="/">
             <Button variant="ghost" size="sm">
@@ -61,7 +61,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl py-12">
         {/* Hero Image */}
         {project.image_url && (
-          <div className="relative w-full h-64 sm:h-96 rounded-lg overflow-hidden mb-8">
+          <div className="relative w-full h-64 sm:h-96 rounded-lg overflow-hidden mb-8 animate-scale-in">
             <Image
               src={project.image_url || "/placeholder.svg"}
               alt={project.title}
@@ -73,7 +73,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
         )}
 
         {/* Title and Actions */}
-        <div className="mb-8">
+        <div className="mb-8 animate-fade-in-up animation-delay-100">
           <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-4 text-balance">{project.title}</h1>
           <p className="text-xl text-muted-foreground mb-6 leading-relaxed">{project.description}</p>
 
@@ -107,7 +107,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
 
         {/* Long Description */}
         {project.long_description && (
-          <Card className="mb-8">
+          <Card className="mb-8 animate-fade-in animation-delay-200">
             <CardContent className="pt-6">
               <h2 className="text-2xl font-bold text-foreground mb-4">About This Project</h2>
               <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap">{project.long_description}</p>
@@ -117,11 +117,14 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
 
         {/* Additional Images */}
         {project.additional_images && project.additional_images.length > 0 && (
-          <div className="mb-8">
+          <div className="mb-8 animate-fade-in animation-delay-300">
             <h2 className="text-2xl font-bold text-foreground mb-4">Project Gallery</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {project.additional_images.map((imageUrl, index) => (
-                <div key={index} className="relative w-full h-64 rounded-lg overflow-hidden">
+                <div
+                  key={index}
+                  className="relative w-full h-64 rounded-lg overflow-hidden transition-transform duration-300 hover:scale-105"
+                >
                   <Image
                     src={imageUrl || "/placeholder.svg"}
                     alt={`${project.title} screenshot ${index + 1}`}
@@ -136,7 +139,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
 
         {/* Code Snippets */}
         {project.code_snippets && project.code_snippets.length > 0 && (
-          <div className="mb-8">
+          <div className="mb-8 animate-fade-in animation-delay-400">
             <h2 className="text-2xl font-bold text-foreground mb-4">Code Highlights</h2>
             <div className="space-y-4">
               {project.code_snippets.map((snippet, index) => (
