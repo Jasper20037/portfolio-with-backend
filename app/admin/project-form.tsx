@@ -96,6 +96,12 @@ export function ProjectForm({ project }: { project?: Project }) {
 
         if (error) {
           console.error("[v0] Update error:", error)
+          console.error("[v0] Error details:", {
+            message: error.message,
+            details: error.details,
+            hint: error.hint,
+            code: error.code,
+          })
           throw error
         }
 
@@ -110,6 +116,12 @@ export function ProjectForm({ project }: { project?: Project }) {
 
         if (error) {
           console.error("[v0] Insert error:", error)
+          console.error("[v0] Error details:", {
+            message: error.message,
+            details: error.details,
+            hint: error.hint,
+            code: error.code,
+          })
           throw error
         }
 
@@ -123,9 +135,27 @@ export function ProjectForm({ project }: { project?: Project }) {
       console.log("[v0] Project saved successfully, redirecting...")
       router.push("/admin")
       router.refresh()
-    } catch (err) {
+    } catch (err: any) {
       console.error("[v0] Error in handleSubmit:", err)
-      const errorMessage = err instanceof Error ? err.message : "An error occurred"
+      let errorMessage = "An error occurred"
+
+      if (err?.message) {
+        errorMessage = err.message
+      }
+
+      if (err?.details) {
+        errorMessage += `\n\nDetails: ${err.details}`
+      }
+
+      if (err?.hint) {
+        errorMessage += `\n\nHint: ${err.hint}`
+      }
+
+      if (err?.code) {
+        errorMessage += `\n\nError Code: ${err.code}`
+      }
+
+      console.error("[v0] Full error message:", errorMessage)
       setError(errorMessage)
 
       toast({
