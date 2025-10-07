@@ -46,7 +46,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           <Link href="/">
             <Button variant="ghost" size="sm">
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Portfolio
+              Terug Naar Portfolio
             </Button>
           </Link>
           <Link href="/admin">
@@ -90,7 +90,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               <Button variant="outline" asChild>
                 <a href={project.github_url} target="_blank" rel="noopener noreferrer">
                   <Github className="mr-2 h-4 w-4" />
-                  View Code
+                  Github Repository
                 </a>
               </Button>
             )}
@@ -109,7 +109,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
         {project.long_description && (
           <Card className="mb-8 animate-fade-in animation-delay-200">
             <CardContent className="pt-6">
-              <h2 className="text-2xl font-bold text-foreground mb-4">About This Project</h2>
+              <h2 className="text-2xl font-bold text-foreground mb-4">Over Dit Project</h2>
               <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap">{project.long_description}</p>
             </CardContent>
           </Card>
@@ -118,7 +118,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
         {/* Additional Images */}
         {project.additional_images && project.additional_images.length > 0 && (
           <div className="mb-8 animate-fade-in animation-delay-300">
-            <h2 className="text-2xl font-bold text-foreground mb-4">Project Gallery</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-4">Project Gallerij</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {project.additional_images.map((imageUrl, index) => (
                 <div
@@ -140,7 +140,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
         {/* Code Snippets */}
         {project.code_snippets && project.code_snippets.length > 0 && (
           <div className="mb-8 animate-fade-in animation-delay-400">
-            <h2 className="text-2xl font-bold text-foreground mb-4">Code Highlights</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-4">Code Voorbeeld</h2>
             <div className="space-y-4">
               {project.code_snippets.map((snippet, index) => (
                 <Card key={index}>
@@ -164,7 +164,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           <Link href="/">
             <Button variant="outline">
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to All Projects
+              Terug naar alle Projecten
             </Button>
           </Link>
         </div>

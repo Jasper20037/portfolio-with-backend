@@ -154,7 +154,7 @@ export default async function HomePage() {
       {/* Footer */}
       <footer className="border-t border-border mt-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8 text-center text-sm sm:text-base text-muted-foreground">
-          <p>© 2025 Jasper van den Heuvel. Gebouwd met Next.js and Supabase.</p>
+          <p>© 2025 Jasper van den Heuvel.</p>
         </div>
       </footer>
     </div>
