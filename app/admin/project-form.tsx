@@ -84,8 +84,6 @@ export function ProjectForm({ project }: { project?: Project }) {
         featured: formData.featured,
         is_hosted: formData.is_hosted,
         display_order: formData.display_order,
-        code_snippets: codeSnippets,
-        additional_images: additionalImages,
       }
 
       console.log("[v0] Project data prepared:", projectData)
@@ -256,38 +254,6 @@ export function ProjectForm({ project }: { project?: Project }) {
             />
           </div>
 
-          <div className="space-y-2">
-            <Label>Additional Images</Label>
-            <div className="flex gap-2">
-              <Input
-                value={newImageUrl}
-                onChange={(e) => setNewImageUrl(e.target.value)}
-                placeholder="Image URL"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault()
-                    addImage()
-                  }
-                }}
-              />
-              <Button type="button" onClick={addImage} variant="outline">
-                Add
-              </Button>
-            </div>
-            {additionalImages.length > 0 && (
-              <div className="space-y-2 mt-2">
-                {additionalImages.map((url, index) => (
-                  <div key={index} className="flex items-center gap-2 p-2 bg-muted rounded">
-                    <span className="flex-1 text-sm truncate">{url}</span>
-                    <Button type="button" size="sm" variant="ghost" onClick={() => removeImage(index)}>
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <Label>Code Snippets</Label>
@@ -324,6 +290,38 @@ export function ProjectForm({ project }: { project?: Project }) {
                 </CardContent>
               </Card>
             ))}
+          </div>
+
+          <div className="space-y-2">
+            <Label>Additional Images</Label>
+            <div className="flex gap-2">
+              <Input
+                value={newImageUrl}
+                onChange={(e) => setNewImageUrl(e.target.value)}
+                placeholder="Image URL"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault()
+                    addImage()
+                  }
+                }}
+              />
+              <Button type="button" onClick={addImage} variant="outline">
+                Add
+              </Button>
+            </div>
+            {additionalImages.length > 0 && (
+              <div className="space-y-2 mt-2">
+                {additionalImages.map((url, index) => (
+                  <div key={index} className="flex items-center gap-2 p-2 bg-muted rounded">
+                    <span className="flex-1 text-sm truncate">{url}</span>
+                    <Button type="button" size="sm" variant="ghost" onClick={() => removeImage(index)}>
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="space-y-2">
