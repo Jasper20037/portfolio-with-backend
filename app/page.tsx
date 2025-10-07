@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Github, ExternalLink, Mail, Linkedin } from "lucide-react"
+import { ThemeToggle } from "@/components/theme-toggle"
 import Link from "next/link"
 import Image from "next/image"
 
@@ -45,11 +46,7 @@ export default async function HomePage() {
                 Contact
               </Button>
             </Link>
-            <Link href="/admin">
-              <Button variant="outline" size="sm">
-                Admin
-              </Button>
-            </Link>
+            <ThemeToggle />
           </nav>
         </div>
       </header>
