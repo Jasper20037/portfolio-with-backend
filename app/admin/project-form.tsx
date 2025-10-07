@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { X } from "lucide-react"
+import { useToast } from "@/hooks/use-toast"
 
 interface CodeSnippet {
   title: string
@@ -37,6 +38,7 @@ interface Project {
 
 export function ProjectForm({ project }: { project?: Project }) {
   const router = useRouter()
+  const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -62,43 +64,75 @@ export function ProjectForm({ project }: { project?: Project }) {
     setIsLoading(true)
     setError(null)
 
-    const supabase = createClient()
-
-    const projectData = {
-      title: formData.title,
-      description: formData.description,
-      long_description: formData.long_description || null,
-      technologies: formData.technologies
-        .split(",")
-        .map((t) => t.trim())
-        .filter(Boolean),
-      image_url: formData.image_url || null,
-      project_url: formData.project_url || null,
-      github_url: formData.github_url || null,
-      featured: formData.featured,
-      is_hosted: formData.is_hosted,
-      display_order: formData.display_order,
-      code_snippets: codeSnippets,
-      additional_images: additionalImages,
-    }
+    console.log("[v0] Starting project submission")
 
     try {
-      if (project?.id) {
-        // Update existing project
-        const { error } = await supabase.from("projects").update(projectData).eq("id", project.id)
+      const supabase = createClient()
+      console.log("[v0] Supabase client created successfully")
 
-        if (error) throw error
-      } else {
-        // Create new project
-        const { error } = await supabase.from("projects").insert(projectData)
-
-        if (error) throw error
+      const projectData = {
+        title: formData.title,
+        description: formData.description,
+        long_description: formData.long_description || null,
+        technologies: formData.technologies
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean),
+        image_url: formData.image_url || null,
+        project_url: formData.project_url || null,
+        github_url: formData.github_url || null,
+        featured: formData.featured,
+        is_hosted: formData.is_hosted,
+        display_order: formData.display_order,
+        code_snippets: codeSnippets,
+        additional_images: additionalImages,
       }
 
+      console.log("[v0] Project data prepared:", projectData)
+
+      if (project?.id) {
+        console.log("[v0] Updating project with ID:", project.id)
+        const { error } = await supabase.from("projects").update(projectData).eq("id", project.id)
+
+        if (error) {
+          console.error("[v0] Update error:", error)
+          throw error
+        }
+
+        toast({
+          title: "Success!",
+          description: "Project updated successfully.",
+          variant: "default",
+        })
+      } else {
+        console.log("[v0] Creating new project")
+        const { error } = await supabase.from("projects").insert(projectData)
+
+        if (error) {
+          console.error("[v0] Insert error:", error)
+          throw error
+        }
+
+        toast({
+          title: "Success!",
+          description: "Project added successfully.",
+          variant: "default",
+        })
+      }
+
+      console.log("[v0] Project saved successfully, redirecting...")
       router.push("/admin")
       router.refresh()
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred")
+      console.error("[v0] Error in handleSubmit:", err)
+      const errorMessage = err instanceof Error ? err.message : "An error occurred"
+      setError(errorMessage)
+
+      toast({
+        title: "Error",
+        description: errorMessage,
+        variant: "destructive",
+      })
     } finally {
       setIsLoading(false)
     }
