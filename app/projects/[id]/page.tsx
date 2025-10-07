@@ -49,11 +49,6 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               Terug Naar Portfolio
             </Button>
           </Link>
-          <Link href="/admin">
-            <Button variant="outline" size="sm">
-              Admin
-            </Button>
-          </Link>
         </div>
       </header>
 
