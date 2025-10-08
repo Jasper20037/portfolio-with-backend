@@ -192,7 +192,7 @@ function ProjectCard({
         </div>
         <div className="flex gap-2">
           <Button size="sm" asChild>
-            <Link href={`/projects/${project.id}`}>More Info</Link>
+            <Link href={`/projects/${project.id}`}>Meer Info</Link>
           </Button>
           {project.is_hosted && project.project_url && (
             <Button size="sm" variant="outline" asChild>
